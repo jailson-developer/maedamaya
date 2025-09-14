@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cupom MAEDAMAYA — 10% OFF na Petz</title>
+    <meta name="description" content="Ganhe 10% de desconto em todas as compras no site e app Petz com o cupom MAEDAMAYA. Clique para copiar e usar!">
+    <style>
+        :root{--bg:#0f172a;--card:#0b1220;--accent:#ff8a00;--muted:#98a0b3;--white:#ffffff}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:linear-gradient(180deg,#071029 0%, #071133 60%);color:var(--white);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+        .container{width:100%;max-width:980px}
+        header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+        .logo{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#183350,#0b2540);font-weight:700;font-size:20px}
+        h1{font-size:20px;margin:0}
+        p.lead{margin:6px 0 0;color:var(--muted)}
+
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:20px;border-radius:16px;display:flex;gap:20px;align-items:center;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+        .left{flex:1;min-width:0}
+        .discount{font-size:40px;font-weight:800;line-height:1;color:var(--accent)}
+        .desc{margin:8px 0;color:var(--muted)}
+
+        .coupon{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;background:rgba(10,14,20,0.6);padding:14px;border-radius:12px;min-width:220px}
+        .code{font-family:monospace;font-size:18px;letter-spacing:2px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.03);width:100%;text-align:center}
+        .actions{display:flex;gap:8px;width:100%}
+        .btn{flex:1;padding:10px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+        .btn-primary{background:var(--accent);color:#081020}
+        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--white)}
+
+        .small{font-size:13px;color:var(--muted);margin-top:6px;text-align:center}
+
+        /* responsive */
+        @media (max-width:640px){
+            .card{flex-direction:column;align-items:stretch}
+            header{gap:12px}
+            .logo{width:52px;height:52px;font-size:18px}
+            .discount{font-size:34px}
+        }
+
+        /* toast */
+        .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:28px;background:#0b1220;padding:10px 14px;border-radius:10px;box-shadow:0 6px 22px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.04);display:none}
+        .toast.show{display:block}
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="logo">MA</div>
+        <div>
+            <h1>Cupom MAEDAMAYA — 10% OFF na Petz</h1>
+            <p class="lead">Válido para todas as compras no site e no app Petz. Use no checkout: <strong>MAEDAMAYA</strong></p>
+        </div>
+    </header>
+
+    <main class="card" role="main">
+        <div class="left">
+            <div class="discount">10% OFF</div>
+            <div class="desc">Desconto válido para TODOS os produtos no site e app Petz. Aproveite frete e ofertas como de costume — o desconto será aplicado no checkout quando o cupom for aceito.</div>
+            <div class="small">Se não aplicar automaticamente, cole o código no campo "Cupom" durante o pagamento.</div>
+        </div>
+
+        <aside class="coupon" aria-label="Cupom">
+            <div class="code" id="couponCode">MAEDAMAYA</div>
+            <div class="actions">
+                <button class="btn btn-primary" id="copyBtn" aria-label="Copiar cupom">Copiar código</button>
+                <button class="btn btn-outline" id="visitBtn" aria-label="Ir para Petz">Ir para Petz</button>
+            </div>
+            <div class="small">Também funciona no app. Abra o link e finalize a compra.</div>
+        </aside>
+    </main>
+
+    <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px">Link parceiro: <a href="https://www.petz.com.br/parceiro/MAEDAMAYA" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none">petz.com.br/parceiro/MAEDAMAYA</a></p>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+    (function(){
+        const coupon = document.getElementById('couponCode').textContent.trim();
+        const copyBtn = document.getElementById('copyBtn');
+        const visitBtn = document.getElementById('visitBtn');
+        const toast = document.getElementById('toast');
+
+        function showToast(msg){
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(()=>{toast.classList.remove('show')},2500);
+        }
+
+        copyBtn.addEventListener('click', async () => {
+            try{
+                if(navigator.clipboard && navigator.clipboard.writeText){
+                    await navigator.clipboard.writeText(coupon);
+                } else {
+                    // fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = coupon; document.body.appendChild(ta);
+                    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+                }
+                showToast('Código copiado: ' + coupon);
+                copyBtn.textContent = 'Copiado ✅';
+                setTimeout(()=>copyBtn.textContent = 'Copiar código',1800);
+            }catch(err){
+                showToast('Não foi possível copiar automaticamente. Selecione e copie: ' + coupon);
+            }
+        });
+
+        visitBtn.addEventListener('click', () => {
+            // abre o link em nova aba e tenta abrir app via URL scheme
+            const partnerUrl = 'https://www.petz.com.br/parceiro/MAEDAMAYA';
+            // tenta abrir o app via deep link (Android/iOS common patterns) — não garantido
+            const appDeepLink = 'petz://parceiro/MAEDAMAYA';
+            // abrir deep link em uma iframe para trigger no mobile, com fallback
+            const win = window.open(partnerUrl, '_blank');
+            try{
+                // tenta também abrir deep link (pode falhar silenciosamente)
+                const iframe = document.createElement('iframe');
+                iframe.style.display='none';
+                iframe.src = appDeepLink;
+                document.body.appendChild(iframe);
+                setTimeout(()=>document.body.removeChild(iframe),1000);
+            }catch(e){}
+            if(win) win.focus();
+        });
+
+        // permitir tocar em anywhere no código para copiar (UX opcional)
+        document.getElementById('couponCode').addEventListener('click', () => copyBtn.click());
+
+    })();
+</script>
+</body>
+</html>
